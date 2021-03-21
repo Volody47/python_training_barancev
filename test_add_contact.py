@@ -1,24 +1,19 @@
 # -*- coding: utf-8 -*-
-from selenium import webdriver
-import unittest
+import pytest
 from add_new_form import AddNewForm
 from application import Application
 
-class TestAddContact(unittest.TestCase):
-    def setUp(self):
-        self.app = Application()
+@pytest.fixture
+def app(request):
+    fixture = Application()
+    request.addfinalizer(fixture.destroy)
+    return fixture
 
-    def test_add_contact(self):
-        self.app.open_home_page()
-        self.app.login(username="admin", password="secret")
-        self.app.open_add_new_page()
-        self.app.create_new_contact(AddNewForm(first_name="Vladimir", last_name="Sharapov", address="spb", email="test@gmail.com"))
-        self.app.return_to_home_page()
-        self.app.logout()
+def test_add_contact(app):
+    app.open_home_page()
+    app.login(username="admin", password="secret")
+    app.open_add_new_page()
+    app.create_new_contact(AddNewForm(first_name="Vladimir", last_name="Sharapov", address="spb", email="test@gmail.com"))
+    app.return_to_home_page()
+    app.logout()
 
-
-    def tearDown(self):
-        self.app.destroy()
-
-if __name__ == "__main__":
-    unittest.main()
