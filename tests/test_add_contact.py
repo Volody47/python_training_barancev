@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
-from add_new_form import AddNewForm
-from application import Application
+from model.add_new_form import AddNewForm
+from fixture.application import Application
 
 @pytest.fixture
 def app(request):
