@@ -1,6 +1,6 @@
 
 
-def test_add_group(app):
+def test_delete_group(app):
     app.session.login(username="admin", password="secret")
     app.group.open_groups_page()
     app.group.delete_first_group()
