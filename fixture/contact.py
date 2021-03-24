@@ -31,6 +31,21 @@ class ContactHelper:
         wd.find_element_by_css_selector("input[value='Delete']").click()
         wd.switch_to_alert().accept()
 
+    def edit_first_contact(self, add_new_form):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_css_selector("img[title='Edit']").click()
+        wd.find_element_by_name("firstname").clear()
+        wd.find_element_by_name("firstname").send_keys(add_new_form.first_name)
+        wd.find_element_by_name("lastname").clear()
+        wd.find_element_by_name("lastname").send_keys(add_new_form.last_name)
+        wd.find_element_by_name("address").clear()
+        wd.find_element_by_name("address").send_keys(add_new_form.address)
+        wd.find_element_by_name("email").clear()
+        wd.find_element_by_name("email").send_keys(add_new_form.email)
+        wd.find_element_by_css_selector("input[value='Update']").click()
+
+
     def open_home_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
