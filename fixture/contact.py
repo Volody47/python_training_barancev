@@ -9,9 +9,9 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
 
-    def create_new_contact(self, add_new_form):
+
+    def fill_out_contact_form(self, add_new_form):
         wd = self.app.wd
-        self.open_add_new_page()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(add_new_form.first_name)
@@ -24,30 +24,35 @@ class ContactHelper:
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
         wd.find_element_by_name("email").send_keys(add_new_form.email)
+
+    def create_new_contact(self, add_new_form):
+        wd = self.app.wd
+        self.open_add_new_page()
+        self.fill_out_contact_form(add_new_form)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_to_home_page()
+
+
+    def select_first_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+
 
     def delete_first_contact(self):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_contact()
         wd.find_element_by_css_selector("input[value='Delete']").click()
         wd.switch_to_alert().accept()
         self.return_to_home_page()
 
+
     def edit_first_contact(self, add_new_form):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_contact()
         wd.find_element_by_css_selector("img[title='Edit']").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(add_new_form.first_name)
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(add_new_form.last_name)
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(add_new_form.address)
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(add_new_form.email)
+        self.fill_out_contact_form(add_new_form)
         wd.find_element_by_css_selector("input[value='Update']").click()
         self.return_to_home_page()
 
