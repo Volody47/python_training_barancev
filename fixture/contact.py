@@ -12,18 +12,19 @@ class ContactHelper:
 
     def fill_out_contact_form(self, add_new_form):
         wd = self.app.wd
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(add_new_form.first_name)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(add_new_form.last_name)
-        wd.find_element_by_name("address").click()
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(add_new_form.address)
-        wd.find_element_by_name("email").click()
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(add_new_form.email)
+        self.fill_out_contact_fields("firstname", add_new_form.first_name)
+        self.fill_out_contact_fields("lastname", add_new_form.last_name)
+        self.fill_out_contact_fields("address", add_new_form.address)
+        self.fill_out_contact_fields("email", add_new_form.email)
+
+
+    def fill_out_contact_fields(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
+
 
     def create_new_contact(self, add_new_form):
         wd = self.app.wd

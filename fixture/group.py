@@ -13,12 +13,12 @@ class GroupHelper:
 
     def fill_out_group_form(self, group):
         wd = self.app.wd
-        self.fill_out_fields("group_name", group.name)
-        self.fill_out_fields("group_header", group.header)
-        self.fill_out_fields("group_footer", group.footer)
+        self.fill_out_group_fields("group_name", group.name)
+        self.fill_out_group_fields("group_header", group.header)
+        self.fill_out_group_fields("group_footer", group.footer)
 
 
-    def fill_out_fields(self, field_name, text):
+    def fill_out_group_fields(self, field_name, text):
         wd = self.app.wd
         if text is not None:
             wd.find_element_by_name(field_name).click()
