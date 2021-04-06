@@ -1,3 +1,4 @@
+from model.add_new_form import AddNewForm
 
 
 class ContactHelper:
@@ -71,4 +72,16 @@ class ContactHelper:
         wd = self.app.wd
         self.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))
+
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.open_home_page()
+        list_contacts = []
+        for element in wd.find_elements_by_css_selector("tr[name='entry']"):
+            id = element.find_element_by_name("selected[]").get_attribute("id")
+            last_name = element.find_element_by_css_selector("td:nth-child(2)").text
+            first_name = element.find_element_by_css_selector("td:nth-child(3)").text
+            list_contacts.append(AddNewForm(last_name=last_name, first_name=first_name, id=id))
+        return list_contacts
 
