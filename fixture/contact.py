@@ -82,6 +82,7 @@ class ContactHelper:
             id = element.find_element_by_name("selected[]").get_attribute("id")
             last_name = element.find_element_by_css_selector("td:nth-child(2)").text
             first_name = element.find_element_by_css_selector("td:nth-child(3)").text
-            list_contacts.append(AddNewForm(last_name=last_name, first_name=first_name, id=id))
+            address = element.find_element_by_css_selector("td:nth-child(4)").text
+            list_contacts.append(AddNewForm(last_name=last_name, first_name=first_name, address=address, id=id))
         return list_contacts
 
