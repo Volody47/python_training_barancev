@@ -35,6 +35,7 @@ class ContactHelper:
         self.fill_out_contact_form(add_new_form)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_to_home_page()
+        self.contact_cashe = None
 
 
     def select_first_contact(self):
@@ -49,6 +50,7 @@ class ContactHelper:
         wd.find_element_by_css_selector("input[value='Delete']").click()
         wd.switch_to_alert().accept()
         self.return_to_home_page()
+        self.contact_cashe = None
 
 
     def edit_first_contact(self, add_new_form):
@@ -59,6 +61,7 @@ class ContactHelper:
         self.fill_out_contact_form(add_new_form)
         wd.find_element_by_css_selector("input[value='Update']").click()
         self.return_to_home_page()
+        self.contact_cashe = None
 
 
     def open_home_page(self):
@@ -80,15 +83,18 @@ class ContactHelper:
         return len(wd.find_elements_by_name("selected[]"))
 
 
+    contact_cashe = None
+
     def get_contact_list(self):
-        wd = self.app.wd
-        self.open_home_page()
-        list_contacts = []
-        for element in wd.find_elements_by_css_selector("tr[name='entry']"):
-            id = element.find_element_by_name("selected[]").get_attribute("id")
-            last_name = element.find_element_by_css_selector("td:nth-child(2)").text
-            first_name = element.find_element_by_css_selector("td:nth-child(3)").text
-            address = element.find_element_by_css_selector("td:nth-child(4)").text
-            list_contacts.append(AddNewForm(last_name=last_name, first_name=first_name, address=address, id=id))
-        return list_contacts
+        if self.contact_cashe is None:
+            wd = self.app.wd
+            self.open_home_page()
+            self.contact_cashe = []
+            for element in wd.find_elements_by_css_selector("tr[name='entry']"):
+                id = element.find_element_by_name("selected[]").get_attribute("id")
+                last_name = element.find_element_by_css_selector("td:nth-child(2)").text
+                first_name = element.find_element_by_css_selector("td:nth-child(3)").text
+                address = element.find_element_by_css_selector("td:nth-child(4)").text
+                self.contact_cashe.append(AddNewForm(last_name=last_name, first_name=first_name, address=address, id=id))
+        return list(self.contact_cashe)
 
