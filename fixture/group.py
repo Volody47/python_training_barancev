@@ -66,11 +66,15 @@ class GroupHelper:
         self.group_cache = None
 
 
+    def edit_first_group(self):
+        wd = self.app.wd
+        self.edit_group_by_index(0)
 
-    def edit_first_group(self, group):
+
+    def edit_group_by_index(self, index, group):
         wd = self.app.wd
         self.open_groups_page()
-        self.select_first_group()
+        self.select_group_by_index(index)
         # edit group
         wd.find_element_by_name("edit").click()
         self.fill_out_group_form(group)

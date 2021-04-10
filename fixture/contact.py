@@ -63,10 +63,15 @@ class ContactHelper:
         self.contact_cashe = None
 
 
-    def edit_first_contact(self, add_new_form):
+    def edit_first_contact(self):
+        wd = self.app.wd
+        self.edit_contact_by_index(0)
+
+
+    def edit_contact_by_index(self, index, add_new_form):
         wd = self.app.wd
         self.open_home_page()
-        self.select_first_contact()
+        self.select_contact_by_index(index)
         wd.find_element_by_css_selector("img[title='Edit']").click()
         self.fill_out_contact_form(add_new_form)
         wd.find_element_by_css_selector("input[value='Update']").click()
