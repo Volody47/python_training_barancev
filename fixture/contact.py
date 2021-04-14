@@ -63,6 +63,11 @@ class ContactHelper:
         self.contact_cashe = None
 
 
+    def select_editable_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_css_selector("img[title='Edit']")[index].click()
+
+
     def edit_first_contact(self):
         wd = self.app.wd
         self.edit_contact_by_index(0)
@@ -71,8 +76,7 @@ class ContactHelper:
     def edit_contact_by_index(self, index, add_new_form):
         wd = self.app.wd
         self.open_home_page()
-        self.select_contact_by_index(index)
-        wd.find_element_by_css_selector("img[title='Edit']").click()
+        self.select_editable_contact_by_index(index)
         self.fill_out_contact_form(add_new_form)
         wd.find_element_by_css_selector("input[value='Update']").click()
         self.return_to_home_page()
@@ -112,4 +116,12 @@ class ContactHelper:
                 address = element.find_element_by_css_selector("td:nth-child(4)").text
                 self.contact_cashe.append(AddNewForm(last_name=last_name, first_name=first_name, address=address, id=id))
         return list(self.contact_cashe)
+
+
+    def open_contact_view_by_index(self, index):
+        wd = self.app.wd
+        self.open_home_page()
+        row = wd.find_elements_by_name("entry")[index]
+        cell = row.find_elements_by_tag_name("td")[6]
+        cell.find_element_by_tag_name("a").click()
 
