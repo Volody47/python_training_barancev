@@ -122,6 +122,22 @@ class ContactHelper:
                                                      secondaryphone=all_phones[3]))
         return list(self.contact_cashe)
 
+    #created that method specifically for test_contact.py, in order to imlement join instead split
+    def get_contact_list_version2(self):
+        if self.contact_cashe is None:
+            wd = self.app.wd
+            self.open_home_page()
+            self.contact_cashe = []
+            for element in wd.find_elements_by_css_selector("tr[name='entry']"):
+                id = element.find_element_by_name("selected[]").get_attribute("id")
+                last_name = element.find_element_by_css_selector("td:nth-child(2)").text
+                first_name = element.find_element_by_css_selector("td:nth-child(3)").text
+                address = element.find_element_by_css_selector("td:nth-child(4)").text
+                all_phones = element.find_element_by_css_selector("td:nth-child(6)").text
+                self.contact_cashe.append(AddNewForm(last_name=last_name, first_name=first_name,
+                                                     address=address, id=id, all_phones_from_home_page=all_phones))
+        return list(self.contact_cashe)
+
 
     def open_contact_view_by_index(self, index):
         wd = self.app.wd
@@ -143,7 +159,7 @@ class ContactHelper:
         mobilephone = wd.find_element_by_name("mobile").get_attribute("value")
         workphone = wd.find_element_by_name("work").get_attribute("value")
         secondaryphone = wd.find_element_by_name("phone2").get_attribute("value")
-        return AddNewForm (first_name=first_name, last_name=last_name, id=id,
+        return AddNewForm(first_name=first_name, last_name=last_name, id=id,
                         address=address, homephone=homephone, mobilephone=mobilephone,
                         workphone=workphone, secondaryphone=secondaryphone)
 
