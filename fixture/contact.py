@@ -1,4 +1,5 @@
 from model.add_new_form import AddNewForm
+import re
 
 
 class ContactHelper:
@@ -114,7 +115,11 @@ class ContactHelper:
                 last_name = element.find_element_by_css_selector("td:nth-child(2)").text
                 first_name = element.find_element_by_css_selector("td:nth-child(3)").text
                 address = element.find_element_by_css_selector("td:nth-child(4)").text
-                self.contact_cashe.append(AddNewForm(last_name=last_name, first_name=first_name, address=address, id=id))
+                all_phones = element.find_element_by_css_selector("td:nth-child(6)").text.split()
+                self.contact_cashe.append(AddNewForm(last_name=last_name, first_name=first_name,
+                                                     address=address, id=id, homephone=all_phones[0],
+                                                     mobilephone=all_phones[1], workphone=all_phones[2],
+                                                     secondaryphone=all_phones[3]))
         return list(self.contact_cashe)
 
 
@@ -124,4 +129,35 @@ class ContactHelper:
         row = wd.find_elements_by_name("entry")[index]
         cell = row.find_elements_by_tag_name("td")[6]
         cell.find_element_by_tag_name("a").click()
+
+
+    def get_contact_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_editable_contact_by_index(index)
+        first_name = wd.find_element_by_name("firstname").get_attribute("value")
+        last_name = wd.find_element_by_name("lastname").get_attribute("value")
+        id = wd.find_element_by_name("id").get_attribute("value")
+        address = wd.find_element_by_name("address").text
+        homephone = wd.find_element_by_name("home").get_attribute("value")
+        mobilephone = wd.find_element_by_name("mobile").get_attribute("value")
+        workphone = wd.find_element_by_name("work").get_attribute("value")
+        secondaryphone = wd.find_element_by_name("phone2").get_attribute("value")
+        return AddNewForm (first_name=first_name, last_name=last_name, id=id,
+                        address=address, homephone=homephone, mobilephone=mobilephone,
+                        workphone=workphone, secondaryphone=secondaryphone)
+
+
+    def get_contact_info_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_home_page()
+        self.open_contact_view_by_index(index)
+        text = wd.find_element_by_css_selector("div#content").text
+        homephone = re.search("H: (.*)", text).group(1)
+        mobilephone = re.search("M: (.*)", text).group(1)
+        workphone = re.search("W: (.*)", text).group(1)
+        secondaryphone = re.search("P: (.*)", text).group(1)
+        return AddNewForm(homephone=homephone, mobilephone=mobilephone,
+                          workphone=workphone, secondaryphone=secondaryphone)
+
 

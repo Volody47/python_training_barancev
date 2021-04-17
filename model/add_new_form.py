@@ -2,11 +2,16 @@ from sys import maxsize
 
 
 class AddNewForm:
-    def __init__(self, first_name=None, last_name=None, address=None, email=None, id=None):
+    def __init__(self, first_name=None, last_name=None, address=None, email=None,
+                 homephone=None, mobilephone=None, workphone=None, secondaryphone=None, id=None):
         self.first_name = first_name
         self.last_name = last_name
         self.address = address
         self.email = email
+        self.homephone = homephone
+        self.mobilephone = mobilephone
+        self.workphone = workphone
+        self.secondaryphone = secondaryphone
         self.id = id
 
     def __repr__(self):
