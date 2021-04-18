@@ -134,8 +134,10 @@ class ContactHelper:
                 first_name = element.find_element_by_css_selector("td:nth-child(3)").text
                 address = element.find_element_by_css_selector("td:nth-child(4)").text
                 all_phones = element.find_element_by_css_selector("td:nth-child(6)").text
+                all_emails = element.find_element_by_css_selector("td:nth-child(5)").text
                 self.contact_cashe.append(AddNewForm(last_name=last_name, first_name=first_name,
-                                                     address=address, id=id, all_phones_from_home_page=all_phones))
+                                                     address=address, id=id, all_emails_from_home_page=all_emails,
+                                                     all_phones_from_home_page=all_phones))
         return list(self.contact_cashe)
 
 
@@ -155,13 +157,16 @@ class ContactHelper:
         last_name = wd.find_element_by_name("lastname").get_attribute("value")
         id = wd.find_element_by_name("id").get_attribute("value")
         address = wd.find_element_by_name("address").text
+        email = wd.find_element_by_name("email").get_attribute("value")
+        email2 = wd.find_element_by_name("email2").get_attribute("value")
+        email3 = wd.find_element_by_name("email3").get_attribute("value")
         homephone = wd.find_element_by_name("home").get_attribute("value")
         mobilephone = wd.find_element_by_name("mobile").get_attribute("value")
         workphone = wd.find_element_by_name("work").get_attribute("value")
         secondaryphone = wd.find_element_by_name("phone2").get_attribute("value")
-        return AddNewForm(first_name=first_name, last_name=last_name, id=id,
-                        address=address, homephone=homephone, mobilephone=mobilephone,
-                        workphone=workphone, secondaryphone=secondaryphone)
+        return AddNewForm(first_name=first_name, last_name=last_name, id=id, email=email,
+                          email2=email2, email3=email3, address=address, homephone=homephone,
+                          mobilephone=mobilephone, workphone=workphone, secondaryphone=secondaryphone)
 
 
     def get_contact_info_from_view_page(self, index):
