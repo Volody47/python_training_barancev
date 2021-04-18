@@ -4,7 +4,7 @@ from resourses.data_for_group import test_group_data
 import pytest
 
 
-@pytest.mark.parametrize("group", test_group_data)
+@pytest.mark.parametrize("group", test_group_data, ids=[repr(x) for x in test_group_data])
 def test_add_group(app, group):
     old_groups = app.group.get_group_list()
     app.group.create(group)
