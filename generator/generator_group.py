@@ -2,7 +2,7 @@ from model.group import Group
 import random
 import string
 import os.path
-import json
+import jsonpickle
 
 
 def random_string(prefix, maxlen):
@@ -16,5 +16,7 @@ test_group_data = [Group(name="", header="", footer="")] + [
 ]
 
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../resourses/group.json")
-with open(file, "w") as f:
-    f.write(json.dumps(test_group_data, default=lambda x: x.__dict__, indent=2))
+
+with open(file, "w") as out:
+    jsonpickle.set_encoder_options("json", indent=2)
+    out.write(jsonpickle.encode(test_group_data))
