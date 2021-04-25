@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
-from resourses.data_for_group import test_group_data
+from resourses.data_for_group import constant as test_group_data
 import pytest
 
 
