@@ -15,7 +15,7 @@ except getopt.GetoptError as err:
     sys.exit(2)
 
 n = 5
-f = "resourses/group.json"
+f = "resourses/groups.json"
 
 for o, a in opts:
     if o == "-n":
