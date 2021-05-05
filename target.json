@@ -9,6 +9,6 @@
     "host": "127.0.0.1",
     "database": "addressbook",
     "user": "root",
-    "passwd": ""
+    "password": ""
   }
 }
