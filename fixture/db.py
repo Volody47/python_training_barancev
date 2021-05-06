@@ -1,5 +1,6 @@
 import pymysql
 from model.group import Group
+from model.add_new_form import AddNewForm
 
 
 class Dbfixture:
@@ -20,6 +21,19 @@ class Dbfixture:
             for row in cursor:
                 (id, name, header, footer) = row
                 list.append(Group(id=str(id), name=name, header=header, footer=footer))
+        finally:
+            cursor.close()
+        return list
+
+
+    def get_contact_list(self):
+        list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select id, firstname, lastname, address, email from addressbook")
+            for row in cursor:
+                (id, firstname, lastname, address, email) = row
+                list.append(AddNewForm(id=str(id), first_name=firstname, last_name=lastname, address=address, email=email))
         finally:
             cursor.close()
         return list
