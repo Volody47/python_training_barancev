@@ -31,7 +31,7 @@ class SessionHelper:
 
 
     def ensure_logout(self):
-        wd = self.app.wd
+        wd = self.app.wdp
         if self.is_logged_in():
             self.logout()
 
