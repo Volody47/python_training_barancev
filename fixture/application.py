@@ -13,6 +13,8 @@ class Application:
             self.wd = webdriver.Chrome()
         elif browser == "ie":
             self.wd = webdriver.Ie()
+        elif browser == "remote":
+            self.wd = webdriver.Remote("http://192.168.0.7:4444/wd/hub", desired_capabilities={"browserName": "chrome"})
         else:
             raise ValueError("Unrecognized browser %s" % browser)
         # self.wd.implicitly_wait(5)
