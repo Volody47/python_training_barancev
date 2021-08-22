@@ -54,7 +54,7 @@ def check_ui(request):
 
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="remote")
+    parser.addoption("--browser", action="store", default="chrome")
     parser.addoption("--target", action="store", default="target.json")
     parser.addoption("--check_ui", action="store_true")
 
